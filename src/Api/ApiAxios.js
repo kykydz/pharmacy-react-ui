@@ -1,12 +1,10 @@
-import axios from "axios";
+import axios from 'axios';
 
 // Buat instance Axios
 const ApiAxios = axios.create({
-  baseURL: "https://hub.dummyapis.com",
+  baseURL: 'http://localhost:3001',
   headers: {
-    "Content-Type": "application/json",
-    "Client-ID": process.env.REACT_APP_CLIENT_ID,
-    "Credential-Key": process.env.REACT_APP_CREDENTIAL_KEY,
+    'Content-Type': 'application/json',
   },
 });
 

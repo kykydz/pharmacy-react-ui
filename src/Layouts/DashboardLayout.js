@@ -1,18 +1,19 @@
-import * as React from "react";
-import PropTypes from "prop-types";
-import Box from "@mui/material/Box";
-import { createTheme } from "@mui/material/styles";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { AppProvider } from "@toolpad/core/AppProvider";
-import { DashboardLayout } from "@toolpad/core/DashboardLayout";
-import StockList from "../Page/StockList/stock-list";
-import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import AddEmployee from "../Page/AddDrug/add-drug";
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import Box from '@mui/material/Box';
+import { createTheme } from '@mui/material/styles';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { AppProvider } from '@toolpad/core/AppProvider';
+import { DashboardLayout } from '@toolpad/core/DashboardLayout';
+import StockList from '../Page/StockList/stock-list';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import AddDrug from '../Page/AddDrug/add-drug';
 import Home from '../Page/home';
+import EditStock from '../Page/EditStock/edit-stock';
 const demoTheme = createTheme({
   cssVariables: {
-    colorSchemeSelector: "data-toolpad-color-scheme",
+    colorSchemeSelector: 'data-toolpad-color-scheme',
   },
   colorSchemes: { light: true, dark: true },
   breakpoints: {
@@ -31,16 +32,17 @@ function DashboardPharmacyContent({ pathname, navigate }) {
     <Box
       sx={{
         py: 4,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        textAlign: "center",
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        textAlign: 'center',
       }}
     >
       {/* Employee List */}
-      {pathname === "/" && <Home />}
-      {pathname === "/stock-list" && <StockList />}
-      {pathname === "/add-stock" && <AddEmployee />}
+      {pathname === '/' && <Home />}
+      {pathname === '/drug-stock/:id' && <EditStock />}
+      {pathname === '/stock-list' && <StockList />}
+      {pathname === '/add-stock' && <AddDrug />}
     </Box>
   );
 }
@@ -53,7 +55,7 @@ DashboardPharmacyContent.propTypes = {
 function DashboardLayoutPattern(props) {
   const { window } = props;
 
-  const [pathname, setPathname] = React.useState("/");
+  const [pathname, setPathname] = React.useState('/');
   const navigate = React.useCallback((path) => setPathname(String(path)), []);
 
   const router = React.useMemo(() => {
@@ -71,14 +73,14 @@ function DashboardLayoutPattern(props) {
     <AppProvider
       navigation={[
         {
-          segment: "stock-list",
-          title: "Stock List",
+          segment: 'stock-list',
+          title: 'Stock List',
           icon: <PeopleAltIcon />,
-          pattern: "stock-list",
+          pattern: 'stock-list',
         },
         {
-          segment: "add-stock",
-          title: "Add Stock",
+          segment: 'add-stock',
+          title: 'Add Stock',
           icon: <AddCircleOutlineIcon />,
         },
       ]}
@@ -86,14 +88,15 @@ function DashboardLayoutPattern(props) {
       theme={demoTheme}
       window={demoWindow}
       branding={{
-        title: "Pharmacy",
-        logo: <img src="/pharmacy.png" alt="Pharmacy"/>,
-      }
-      
-    }
+        title: 'Pharmacy',
+        logo: <img src="/pharmacy.png" alt="Pharmacy" />,
+      }}
     >
       <DashboardLayout>
-        <DashboardPharmacyContent pathname={pathname ?? "/"} navigate={navigate} />
+        <DashboardPharmacyContent
+          pathname={pathname ?? '/'}
+          navigate={navigate}
+        />
       </DashboardLayout>
     </AppProvider>
   );
